@@ -12,6 +12,7 @@ import siteRoutes from "./routes/siteRoutes.js";
 import deviceRoutes from "./routes/deviceRoutes.js";
 import { errorHandler, notFoundHandler } from "./middleware/errorHandler.js";
 import userRoutes from "./routes/userRoutes.js";
+import companyRoutes from "./routes/companyRoutes.js";
 
 import dashboardRoutes from "./routes/dashboardRoutes.js";
 
@@ -60,6 +61,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/sites", siteRoutes);
 app.use("/api/devices", deviceRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/company", companyRoutes);
 
 /*
  * The dashboard router is mounted broadly at /api,

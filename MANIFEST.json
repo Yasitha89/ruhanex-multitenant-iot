@@ -1,15 +1,16 @@
 {
-  "copy_files": [
-    "server/src/controllers/userController.js",
-    "server/src/routes/userRoutes.js",
-    "client/src/api/userApi.js",
-    "client/src/pages/administration/UserAdministrationPage.jsx",
-    "client/src/layouts/buildSidebarItems.jsx",
-    "client/src/App.jsx"
+  "copy": [
+    "server/src/models/Tenant.js",
+    "server/src/controllers/companyController.js",
+    "server/src/routes/companyRoutes.js",
+    "client/src/api/companyApi.js",
+    "client/src/company/CompanyContext.jsx",
+    "client/src/pages/administration/CompanyProfilePage.jsx"
   ],
-  "manual_updates": [
-    "Register userRoutes in server/src/app.js",
-    "Replace getNavigationDevices using deviceController.access-update.js",
-    "Add site access check using dashboardController.access-snippet.js"
+  "manual": [
+    "Register companyRoutes in server/src/app.js",
+    "Add Company menu item",
+    "Add Company route",
+    "Wrap CompanyProvider in main.jsx"
   ]
 }

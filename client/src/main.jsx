@@ -8,6 +8,7 @@ import App from "./App";
 import { AuthProvider } from "./auth/AuthContext";
 import { DeviceProvider } from "./devices/DeviceContext";
 import "./styles/global.css";
+import { CompanyProvider } from "./company/CompanyContext";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -21,11 +22,13 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         }}
       >
         <AuthProvider>
-          <DeviceProvider>
-            <App />
-          </DeviceProvider>
+          <CompanyProvider>
+            <DeviceProvider>
+              <App />
+            </DeviceProvider>
+          </CompanyProvider>
         </AuthProvider>
       </ConfigProvider>
     </BrowserRouter>
-  </React.StrictMode>
+  </React.StrictMode>,
 );

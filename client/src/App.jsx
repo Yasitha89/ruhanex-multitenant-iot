@@ -1,8 +1,4 @@
-import {
-  Navigate,
-  Route,
-  Routes,
-} from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 
 import ProtectedRoute from "./auth/ProtectedRoute";
 import PublicOnlyRoute from "./auth/PublicOnlyRoute";
@@ -16,87 +12,53 @@ import DashboardPage from "./pages/DashboardPage";
 import DeviceAdministrationPage from "./pages/administration/DeviceAdministrationPage";
 import SiteAdministrationPage from "./pages/administration/SiteAdministrationPage";
 import UserAdministrationPage from "./pages/administration/UserAdministrationPage";
+import CompanyProfilePage from "./pages/administration/CompanyProfilePage";
 
 import DeviceDashboardPage from "./pages/devices/DeviceDashboardPage";
 
 export default function App() {
   return (
     <Routes>
-      <Route
-        element={
-          <PublicOnlyRoute />
-        }
-      >
-        <Route
-          path="/login"
-          element={<LoginPage />}
-        />
+      <Route element={<PublicOnlyRoute />}>
+        <Route path="/login" element={<LoginPage />} />
       </Route>
 
-      <Route
-        element={
-          <ProtectedRoute />
-        }
-      >
-        <Route
-          element={<AppLayout />}
-        >
-          <Route
-            index
-            element={
-              <DashboardPage />
-            }
-          />
+      <Route element={<ProtectedRoute />}>
+        <Route element={<AppLayout />}>
+          <Route index element={<DashboardPage />} />
 
           <Route
             path="devices/:deviceId/:dashboardType"
-            element={
-              <DeviceDashboardPage />
-            }
+            element={<DeviceDashboardPage />}
           />
 
-          <Route
-            element={
-              <RoleRoute
-                allowedRoles={[
-                  "company_admin",
-                ]}
-              />
-            }
-          >
+          <Route element={<RoleRoute allowedRoles={["company_admin"]} />}>
+            <Route
+              path="administration/company"
+              element={<CompanyProfilePage />}
+            />
+
             <Route
               path="administration/sites"
-              element={
-                <SiteAdministrationPage />
-              }
+              element={<SiteAdministrationPage />}
             />
 
             <Route
               path="administration/devices"
-              element={
-                <DeviceAdministrationPage />
-              }
+              element={<DeviceAdministrationPage />}
             />
 
             <Route
               path="administration/users"
-              element={
-                <UserAdministrationPage />
-              }
+              element={<UserAdministrationPage />}
             />
           </Route>
         </Route>
       </Route>
 
-      <Route
-        path="*"
-        element={
-          <Navigate
-            to="/"
-            replace
-          />
-        }
-      />
+      <Route path="administration/company" element={<CompanyProfilePage />} />
+
+      <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
 }

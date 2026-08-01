@@ -133,6 +133,10 @@ export function buildSidebarItems({ devices, isCompanyAdmin }) {
       icon: <SettingOutlined />,
       children: [
         {
+          key: "/administration/company",
+          label: "Company",
+        },
+        {
           key: "/administration/sites",
           label: "Sites",
         },

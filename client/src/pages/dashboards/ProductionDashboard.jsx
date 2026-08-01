@@ -14,8 +14,6 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 import { getProductionDashboard } from "../../api/dashboardApi";
 
-import { getCurrentShift } from "../../utils/shiftTime";
-
 const { Title, Text } = Typography;
 
 const REFRESH_INTERVAL_MS = 5000;
@@ -83,10 +81,6 @@ export default function ProductionDashboard({ device }) {
 
   const loadDashboard = useCallback(
     async ({ initialLoad = false } = {}) => {
-      /*
-       * Prevent overlapping requests if Node-RED
-       * takes longer than five seconds to respond.
-       */
       if (requestInProgressRef.current) {
         return;
       }
@@ -98,11 +92,8 @@ export default function ProductionDashboard({ device }) {
       }
 
       try {
-        const shiftInfo = getCurrentShift();
-
         const result = await getProductionDashboard({
           deviceId: device._id,
-          ...shiftInfo,
         });
 
         if (!isMountedRef.current) {
@@ -117,7 +108,7 @@ export default function ProductionDashboard({ device }) {
             : nextData,
         );
 
-        setRequestInfo(shiftInfo);
+        setRequestInfo(result.shiftRange || null);
 
         setLastUpdated(new Date());
 
@@ -147,19 +138,12 @@ export default function ProductionDashboard({ device }) {
     });
 
     const intervalId = window.setInterval(() => {
-      /*
-       * Pause polling when the tab is hidden.
-       */
       if (!document.hidden) {
         loadDashboard();
       }
     }, REFRESH_INTERVAL_MS);
 
     function handleVisibilityChange() {
-      /*
-       * Refresh immediately when the user
-       * returns to the browser tab.
-       */
       if (!document.hidden) {
         loadDashboard();
       }
@@ -223,6 +207,10 @@ export default function ProductionDashboard({ device }) {
               </Text>
             )}
 
+            {requestInfo?.timezone && (
+              <Text type="secondary">Timezone: {requestInfo.timezone}</Text>
+            )}
+
             <Text type="secondary">Auto refresh: 5 seconds</Text>
 
             <Text type="secondary">
@@ -236,6 +224,11 @@ export default function ProductionDashboard({ device }) {
           color={error ? "red" : "green"}
           style={{
             marginTop: 8,
+            width: "fit-content",
+            height: "fit-content",
+            padding: "3px 10px",
+            fontSize: 13,
+            lineHeight: "20px",
           }}
         >
           {error ? "Connection Error" : "Live"}
@@ -264,7 +257,10 @@ export default function ProductionDashboard({ device }) {
                   color={getStatusColor(dashboardData?.status)}
                   style={{
                     fontSize: 16,
-                    padding: "5px 12px",
+                    fontWeight: 600,
+                    padding: "3px 12px",
+                    lineHeight: "22px",
+                    borderRadius: 6,
                     margin: 0,
                   }}
                 >
