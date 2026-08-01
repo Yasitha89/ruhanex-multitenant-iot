@@ -1,0 +1,15 @@
+{
+  "copy_files": [
+    "server/src/controllers/userController.js",
+    "server/src/routes/userRoutes.js",
+    "client/src/api/userApi.js",
+    "client/src/pages/administration/UserAdministrationPage.jsx",
+    "client/src/layouts/buildSidebarItems.jsx",
+    "client/src/App.jsx"
+  ],
+  "manual_updates": [
+    "Register userRoutes in server/src/app.js",
+    "Replace getNavigationDevices using deviceController.access-update.js",
+    "Add site access check using dashboardController.access-snippet.js"
+  ]
+}
